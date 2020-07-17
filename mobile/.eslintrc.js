@@ -7,6 +7,7 @@ module.exports = {
 	],
 	plugins: ['@typescript-eslint', 'prettier'],
 	rules: {
+    'react-native/no-inline-styles':'off',
     '@typescript-eslint/no-unused-vars':'warn',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
