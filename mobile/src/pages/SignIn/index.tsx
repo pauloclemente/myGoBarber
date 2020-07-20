@@ -25,6 +25,7 @@ import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import getValidationErrors from '../../utils/getValidationErrors';
+import { useAuth } from '../../hooks/auth';
 interface ISignInDTO {
 	email: string;
 	password: string;
@@ -34,6 +35,8 @@ const SignIn: React.FC = () => {
 	const formRef = useRef<FormHandles>(null);
 	const passwordInputRef = useRef<TextInput>(null);
 	const navigation = useNavigation();
+	const { signIn, user } = useAuth();
+	console.log(user);
 	const handleSignIn = useCallback(async (data: ISignInDTO) => {
 		try {
 			formRef.current?.setErrors({});
@@ -45,8 +48,7 @@ const SignIn: React.FC = () => {
 				password: Yup.string().required('Senha obrigatória'),
 			});
 			await schema.validate(data, { abortEarly: false });
-			/* await signIn({ email: data.email, password: data.password });
-				history.push('/dashboard'); */
+			await signIn({ email: data.email, password: data.password });
 		} catch (error) {
 			if (error instanceof Yup.ValidationError) {
 				const errors = getValidationErrors(error);
