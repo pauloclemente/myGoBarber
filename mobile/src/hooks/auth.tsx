@@ -17,6 +17,7 @@ interface IAuthState {
 	user: object;
 }
 interface IAuthContextDTO {
+	loading: boolean;
 	user: object;
 	signIn(credencials: SignInCredendials): Promise<void>;
 	signOut(): void;
@@ -25,6 +26,7 @@ const AuthContext = createContext<IAuthContextDTO>({} as IAuthContextDTO);
 
 const AuthProvider: React.FC = ({ children }) => {
 	const [data, setData] = useState<IAuthState>({} as IAuthState);
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		async function loadStorageData(): Promise<void> {
 			const [token, user] = await AsyncStorare.multiGet([
@@ -35,6 +37,7 @@ const AuthProvider: React.FC = ({ children }) => {
 			if (token[1] && user[1]) {
 				setData({ token: token[1], user: JSON.parse(user[1]) });
 			}
+			setLoading(false);
 		}
 		loadStorageData();
 	}, []);
@@ -53,7 +56,7 @@ const AuthProvider: React.FC = ({ children }) => {
 		setData({} as IAuthState);
 	}, []);
 	return (
-		<AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+		<AuthContext.Provider value={{ user: data.user, signIn, signOut, loading }}>
 			{children}
 		</AuthContext.Provider>
 	);
