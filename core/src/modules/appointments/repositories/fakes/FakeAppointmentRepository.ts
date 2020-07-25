@@ -5,7 +5,7 @@ import { isEqual } from 'date-fns';
 
 import Appointment from '../../infra/typeorm/entities/Appointment';
 
-class AppointmentsRepository implements IAppointmentRepository {
+class FakeAppointmentsRepository implements IAppointmentRepository {
 	private appointments: Appointment[] = [];
 
 	public async findByDate(date: Date): Promise<Appointment | undefined> {
@@ -29,4 +29,4 @@ class AppointmentsRepository implements IAppointmentRepository {
 		return appointment;
 	}
 }
-export default AppointmentsRepository;
+export default FakeAppointmentsRepository;
