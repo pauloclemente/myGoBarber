@@ -33,7 +33,6 @@ class CreateAppointmentService {
 			provider_id,
 			date: appointmentDate,
 		});
-		await this.appointmentsRepository.save(appointment);
 
 		return appointment;
 	}
