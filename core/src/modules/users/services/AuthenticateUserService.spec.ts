@@ -4,7 +4,7 @@ import AuthenticateUserService from './AuthenticateUserService';
 import CreateUserService from './CreateUserService';
 import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 
-describe('AuthenticateUser', () => {
+describe('AuthenticateUserService', () => {
 	it('should be able to authenticate', async () => {
 		const fakeUsersRepository = new FakeUsersRepository();
 		const fakeHashProvider = new FakeHashProvider();
@@ -42,7 +42,7 @@ describe('AuthenticateUser', () => {
 			fakeHashProvider,
 		);
 
-		expect(
+		await expect(
 			authUser.execute({
 				email: 'johndoe2@example.com',
 				password: '123123',
