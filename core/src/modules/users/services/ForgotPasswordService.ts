@@ -29,9 +29,19 @@ export default class ForgotPasswordService {
 		// gera token
 		const { token } = await this.userTokensRepositoroy.generate(user.id);
 
-		await this.mailProvider.sendMail(
-			email,
-			`Pedido para recuperação de senha recebido: ${token}`,
-		);
+		await this.mailProvider.sendMail({
+			to: {
+				name: user.name,
+				email: user.email,
+			},
+			subject: '[myGoBarber] Recuperação de senha',
+			templateData: {
+				template: 'Olá, {{name}}: {{token}}',
+				variables: {
+					name: user.name,
+					token,
+				},
+			},
+		});
 	}
 }
