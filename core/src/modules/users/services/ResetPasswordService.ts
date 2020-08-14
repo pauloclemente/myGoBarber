@@ -30,6 +30,7 @@ export default class ResetPasswordService {
 		if (!user) {
 			throw new AppError('User does not exists');
 		}
+
 		const tokenCreatedAt = userToken.created_at;
 		const passwordUpdateAt = new Date(Date.now());
 

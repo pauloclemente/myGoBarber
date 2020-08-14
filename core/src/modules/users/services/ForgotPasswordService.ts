@@ -27,11 +27,11 @@ export default class ForgotPasswordService {
 			throw new AppError('This email was not found');
 		}
 		// gera token
-		await this.userTokensRepositoroy.generate(user.id);
+		const { token } = await this.userTokensRepositoroy.generate(user.id);
 
-		this.mailProvider.sendMail(
+		await this.mailProvider.sendMail(
 			email,
-			'Pedido para recuperação de senha recebido',
+			`Pedido para recuperação de senha recebido: ${token}`,
 		);
 	}
 }
