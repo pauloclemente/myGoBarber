@@ -3,6 +3,7 @@ import IAppointmentRepository from '@modules/appointments/repositories/IAppointm
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 
 import IFindAllInMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllInMonthFromProviderDTO';
+import IFindAllInDayFromProviderDTO from '@modules/appointments/dtos/IFindAllInDayFromProviderDTO';
 import Appointment from '../entities/Appointment';
 
 class AppointmentsRepository implements IAppointmentRepository {
@@ -10,6 +11,12 @@ class AppointmentsRepository implements IAppointmentRepository {
 
 	constructor() {
 		this.ormRepository = getRepository(Appointment);
+	}
+
+	findAllInDayFromProvider(
+		data: IFindAllInDayFromProviderDTO,
+	): Promise<Appointment[]> {
+		throw new Error('Method not implemented.');
 	}
 
 	public async findAllInMonthFromProvider({
@@ -39,9 +46,14 @@ class AppointmentsRepository implements IAppointmentRepository {
 
 	public async create({
 		provider_id,
+		user_id,
 		date,
 	}: ICreateAppointmentDTO): Promise<Appointment> {
-		const appointment = await this.ormRepository.create({ provider_id, date });
+		const appointment = this.ormRepository.create({
+			provider_id,
+			user_id,
+			date,
+		});
 		return appointment;
 	}
 }
