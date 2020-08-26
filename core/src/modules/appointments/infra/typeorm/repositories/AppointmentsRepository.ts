@@ -45,7 +45,7 @@ class AppointmentsRepository implements IAppointmentRepository {
 				provider_id,
 				date: Raw(
 					(dateFieldName) =>
-						`to_char(${dateFieldName}), 'MM-YYYY'= ${parsedMonth}-${year}`,
+						`to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
 				),
 			},
 		});
@@ -69,6 +69,7 @@ class AppointmentsRepository implements IAppointmentRepository {
 			user_id,
 			date,
 		});
+		this.ormRepository.save(appointment);
 		return appointment;
 	}
 }
