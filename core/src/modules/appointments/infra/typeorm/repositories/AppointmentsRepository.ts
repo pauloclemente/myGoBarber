@@ -13,10 +13,25 @@ class AppointmentsRepository implements IAppointmentRepository {
 		this.ormRepository = getRepository(Appointment);
 	}
 
-	findAllInDayFromProvider(
-		data: IFindAllInDayFromProviderDTO,
-	): Promise<Appointment[]> {
-		throw new Error('Method not implemented.');
+	public async findAllInDayFromProvider({
+		provider_id,
+		day,
+		month,
+		year,
+	}: IFindAllInDayFromProviderDTO): Promise<Appointment[]> {
+		const parsedDay = String(day).padStart(2, '0');
+		const parsedMonth = String(month).padStart(2, '0');
+
+		const appointments = await this.ormRepository.find({
+			where: {
+				provider_id,
+				date: Raw(
+					(dateFildName) =>
+						`to_char(${dateFildName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`,
+				),
+			},
+		});
+		return appointments;
 	}
 
 	public async findAllInMonthFromProvider({
