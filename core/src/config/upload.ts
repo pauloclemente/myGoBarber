@@ -12,6 +12,10 @@ interface IUploadConfig {
 	};
 	config: {
 		disk: {};
+		aws: {
+			bucket: string;
+			region: string;
+		};
 	};
 }
 
@@ -31,5 +35,9 @@ export default {
 	},
 	config: {
 		disk: {},
+		aws: {
+			bucket: process.env.AWS_BUCKET,
+			region: process.env.AWS_REGION,
+		},
 	},
 } as IUploadConfig;
