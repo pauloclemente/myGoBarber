@@ -35,7 +35,6 @@ export default class ListAppoinmentsService {
 				month,
 				day,
 			});
-			console.log('buscou');
 			await this.cacheProvider.save(cacheKey, appointments);
 		}
 		return appointments;
