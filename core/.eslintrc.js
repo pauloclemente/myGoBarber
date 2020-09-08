@@ -27,6 +27,7 @@ module.exports = {
     'import/no-extraneous-dependencies':'off',
     'class-methods-use-this':'off',
     '@typescript-eslint/no-unused-vars':['warn',{'argsIgnorePattern':'_'}],
+    '@typescript-eslint/ban-types':'warn',
     //'@typescript-eslint/interface-name-prefix': ['error', {'prefixWithI':'always'}],
     'import/extensions':[
       'error',
