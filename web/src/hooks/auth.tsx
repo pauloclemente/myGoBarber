@@ -5,12 +5,17 @@ interface SignInCredendials {
   email: string;
   password: string;
 }
+interface IUser {
+  id: string;
+  name: string;
+  avatar_url: string;
+}
 interface AuthState {
   token: string;
-  user: object;
+  user: IUser;
 }
 interface AuthContextDTO {
-  user: object;
+  user: IUser;
   signIn(credencials: SignInCredendials): Promise<void>;
   signOut(): void;
 }
