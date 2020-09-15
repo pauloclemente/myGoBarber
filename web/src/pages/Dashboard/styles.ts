@@ -48,15 +48,19 @@ export const Profile = styled.div`
     span {
       color: #f4ede8;
     }
-    strong {
+    a {
+      text-decoration: none;
       color: #ff9000;
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 `;
 
 export const Content = styled.main`
   max-width: 1120px;
-  margin: 64px;
+  margin: 64px auto;
   display: flex;
 `;
 
@@ -71,7 +75,7 @@ export const Schedule = styled.div`
     color: #ff9000;
     display: flex;
     align-items: center;
-    font-weight: bold;
+    font-weight: 500;
     span {
       display: flex;
       align-items: center;
