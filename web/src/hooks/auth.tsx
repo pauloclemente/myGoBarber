@@ -8,6 +8,7 @@ interface SignInCredendials {
 interface IUser {
   id: string;
   name: string;
+  email: string;
   avatar_url: string;
 }
 interface AuthState {
@@ -18,6 +19,7 @@ interface AuthContextDTO {
   user: IUser;
   signIn(credencials: SignInCredendials): Promise<void>;
   signOut(): void;
+  updateUser(user: IUser): void;
 }
 const AuthContext = createContext<AuthContextDTO>({} as AuthContextDTO);
 const AuthProvider: React.FC = ({ children }) => {
@@ -43,13 +45,25 @@ const AuthProvider: React.FC = ({ children }) => {
 
     setData({ token, user });
   }, []);
+  const updateUser = useCallback(
+    (user: IUser) => {
+      localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+      setData({
+        token: data.token,
+        user,
+      });
+    },
+    [setData, data.token],
+  );
   const signOut = useCallback(() => {
     localStorage.removeItem('@GoBarber:token');
     localStorage.removeItem('@GoBarber:user');
     setData({} as AuthState);
   }, []);
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user: data.user, signIn, signOut, updateUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
